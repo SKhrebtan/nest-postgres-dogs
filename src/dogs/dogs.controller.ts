@@ -34,25 +34,26 @@ export class DogsController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   create(@Body() createDogDto: CreateDogDto, @Req() req) {
-    return this.dogsService.create(createDogDto, +req.user.id);
+    console.log(req.user.id);
+    return this.dogsService.create(createDogDto, req.user.id);
   }
 
   @Get()
   @UseGuards(JwtAuthGuard)
   findAll(@Req() req) {
-    return this.dogsService.findAll(+req.user.id);
+    return this.dogsService.findAll(req.user.id);
   }
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
-    return this.dogsService.findOne(+id);
+    return this.dogsService.findOne(Number(id));
   }
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updateDogDto: UpdateDogDto) {
-    return this.dogsService.update(+id, updateDogDto);
+    return this.dogsService.update(Number(id), updateDogDto);
   }
 
   @Delete(':id')

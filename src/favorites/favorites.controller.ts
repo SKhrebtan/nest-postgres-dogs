@@ -25,7 +25,7 @@ export class FavoritesController {
   @UsePipes(new ValidationPipe())
   @UseGuards(JwtAuthGuard)
   create(@Body() createFavoriteDto: CreateFavoriteDto, @Req() req) {
-    return this.favoritesService.create(createFavoriteDto, +req.user.id);
+    return this.favoritesService.create(createFavoriteDto, req.user.id);
   }
 
   @Get('pagination')
@@ -36,22 +36,22 @@ export class FavoritesController {
     @Query('limit') limit: number,
   ) {
     return this.favoritesService.findAllWithPagination(
-      +req.user.id,
-      +page,
-      +limit,
+      req.user.id,
+      page,
+      limit,
     );
   }
 
   @Get()
   @UseGuards(JwtAuthGuard)
   findAll(@Req() req) {
-    return this.favoritesService.findAll(+req.user.id);
+    return this.favoritesService.findAll(req.user.id);
   }
 
   @Get('/dog/:id')
   @UseGuards(JwtAuthGuard)
   findAllByDog(@Param('id') id: string) {
-    return this.favoritesService.findAllByDog(+id);
+    return this.favoritesService.findAllByDog(id);
   }
 
   @Get(':id')
@@ -66,12 +66,12 @@ export class FavoritesController {
     @Param('id') id: string,
     @Body() updateFavoriteDto: UpdateFavoriteDto,
   ) {
-    return this.favoritesService.update(+id, updateFavoriteDto);
+    return this.favoritesService.update(id, updateFavoriteDto);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   delete(@Param('id') id: string) {
-    return this.favoritesService.delete(+id);
+    return this.favoritesService.delete(id);
   }
 }
