@@ -24,7 +24,7 @@ import { FavoritesModule } from './favorites/favorites.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        url: 'postgres://postgresdb:Etiq1xHjuTdoqDbTZvmydQARpMP5xJ2A@dpg-co2qni4f7o1s73co84t0-a.oregon-postgres.render.com/nest_6wru',
+        url: configService.get('DB_HOST2'),
         ssl: {
           rejectUnauthorized: false,
         },
