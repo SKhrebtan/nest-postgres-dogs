@@ -46,20 +46,20 @@ export class DogsController {
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  findOne(@Param('id') id: string) {
-    return this.dogsService.findOne(Number(id));
+  findOne(@Param('id') id: number) {
+    return this.dogsService.findOne(id);
   }
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  update(@Param('id') id: string, @Body() updateDogDto: UpdateDogDto) {
-    return this.dogsService.update(Number(id), updateDogDto);
+  update(@Param('id') id: number, @Body() updateDogDto: UpdateDogDto) {
+    return this.dogsService.update(id, updateDogDto);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  delete(@Param('id') id: string) {
-    return this.dogsService.delete(+id);
+  delete(@Param('id') id: number) {
+    return this.dogsService.delete(id);
   }
 
   // @Roles(Role.Admin)
