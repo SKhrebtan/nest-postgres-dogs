@@ -34,7 +34,6 @@ export class DogsController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   create(@Body() createDogDto: CreateDogDto, @Req() req) {
-    console.log(req.user.id);
     return this.dogsService.create(createDogDto, req.user.id);
   }
 

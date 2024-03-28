@@ -26,7 +26,9 @@ export class UserService {
       password: await bcrypt.hash(createUserDto.password, 10),
     });
 
-    const token = this.jwtService.sign({ email: createUserDto.email });
+    const token = this.jwtService.sign({
+      email: createUserDto.email,
+    });
 
     return { user, token };
   }

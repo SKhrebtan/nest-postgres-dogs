@@ -25,6 +25,7 @@ export class FavoritesController {
   @UsePipes(new ValidationPipe())
   @UseGuards(JwtAuthGuard)
   create(@Body() createFavoriteDto: CreateFavoriteDto, @Req() req) {
+    console.log(req.user);
     return this.favoritesService.create(createFavoriteDto, req.user.id);
   }
 
