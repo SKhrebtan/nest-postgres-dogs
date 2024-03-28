@@ -50,7 +50,7 @@ export class FavoritesController {
 
   @Get('/dog/:id')
   @UseGuards(JwtAuthGuard)
-  findAllByDog(@Param('id') id: string) {
+  findAllByDog(@Param('id') id: number) {
     return this.favoritesService.findAllByDog(id);
   }
 
@@ -63,7 +63,7 @@ export class FavoritesController {
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateFavoriteDto: UpdateFavoriteDto,
   ) {
     return this.favoritesService.update(id, updateFavoriteDto);
@@ -71,7 +71,7 @@ export class FavoritesController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: number) {
     return this.favoritesService.delete(id);
   }
 }
