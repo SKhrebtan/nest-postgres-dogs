@@ -27,7 +27,9 @@ export class Favorite {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Dog, (dog) => dog.favorites)
+  @ManyToOne(() => Dog, (dog) => dog.favorites, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'dog_id' })
   dog: Dog;
 

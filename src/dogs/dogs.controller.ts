@@ -25,6 +25,7 @@ import { DogsService } from './dogs.service';
 import { Roles } from 'src/role/roles.decorator';
 import { Role } from 'src/role/roles.enum';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { AuthorGuard } from 'src/guard/author.guard';
 
 @Controller('dogs')
 export class DogsController {
@@ -43,20 +44,20 @@ export class DogsController {
     return this.dogsService.findAll(req.user.id);
   }
 
-  @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @Get(':type/:id')
+  @UseGuards(JwtAuthGuard, AuthorGuard)
   findOne(@Param('id') id: number) {
     return this.dogsService.findOne(id);
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':type/:id')
+  @UseGuards(JwtAuthGuard, AuthorGuard)
   update(@Param('id') id: number, @Body() updateDogDto: UpdateDogDto) {
     return this.dogsService.update(id, updateDogDto);
   }
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @Delete(':type/:id')
+  @UseGuards(JwtAuthGuard, AuthorGuard)
   delete(@Param('id') id: number) {
     return this.dogsService.delete(id);
   }

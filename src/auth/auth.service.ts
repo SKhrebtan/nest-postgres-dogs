@@ -31,6 +31,10 @@ export class AuthService {
       }),
     };
   }
+
+  async validateOwner(id: number) {
+    return;
+  }
   // async signIn(
   //   username: string,
   //   pass: string,

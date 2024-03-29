@@ -16,6 +16,7 @@ import { FavoritesService } from './favorites.service';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { AuthorGuard } from 'src/guard/author.guard';
 
 @Controller('favorites')
 export class FavoritesController {
@@ -55,14 +56,14 @@ export class FavoritesController {
     return this.favoritesService.findAllByDog(id);
   }
 
-  @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @Get(':type/:id')
+  @UseGuards(JwtAuthGuard, AuthorGuard)
   findOne(@Param('id') id: number) {
     return this.favoritesService.findOne(id);
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':type/:id')
+  @UseGuards(JwtAuthGuard, AuthorGuard)
   update(
     @Param('id') id: number,
     @Body() updateFavoriteDto: UpdateFavoriteDto,
@@ -70,8 +71,8 @@ export class FavoritesController {
     return this.favoritesService.update(id, updateFavoriteDto);
   }
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @Delete(':type/:id')
+  @UseGuards(JwtAuthGuard, AuthorGuard)
   delete(@Param('id') id: number) {
     return this.favoritesService.delete(id);
   }

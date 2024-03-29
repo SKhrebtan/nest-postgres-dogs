@@ -5,11 +5,13 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/role/roles.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Dog } from './entities/dog.entity';
+import { Favorite } from 'src/favorites/entities/favorite.entity';
+import { FavoritesService } from 'src/favorites/favorites.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Dog])],
+  imports: [TypeOrmModule.forFeature([Dog, Favorite])],
   controllers: [DogsController],
-  providers: [DogsService],
+  providers: [DogsService, FavoritesService],
   exports: [DogsService],
 })
 export class DogsModule {}
