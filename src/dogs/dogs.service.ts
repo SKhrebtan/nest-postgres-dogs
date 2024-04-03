@@ -18,17 +18,17 @@ export class DogsService {
     private readonly dogRepository: Repository<Dog>,
   ) {}
 
-  async create(createDogDto: CreateDogDto, id: number) {
+  async create(createDogDto: CreateDogDto, imageUrl: string, id: number) {
     const isExist = await this.dogRepository.findBy({
       user: { id },
       name: createDogDto.name,
     });
 
     if (isExist.length) throw new BadRequestException('This dog already exist');
-
     const newDog = {
       name: createDogDto.name,
       breed: createDogDto.breed,
+      image: imageUrl,
       user: {
         id,
       },

@@ -22,6 +22,9 @@ export class Dog {
   @Column()
   breed: string;
 
+  @Column()
+  image: string;
+
   @ManyToOne(() => User, (user) => user.dogs)
   @JoinColumn({ name: 'user_id' })
   user: User;

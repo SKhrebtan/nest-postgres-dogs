@@ -7,6 +7,8 @@ export class CreateDogDto {
   @IsNotEmpty()
   breed: string;
 
+  file: Express.Multer.File;
+
   @IsOptional()
   user?: User;
 }

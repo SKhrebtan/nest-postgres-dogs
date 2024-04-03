@@ -17,22 +17,22 @@ import { User } from './users/entities/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FavoritesController } from './favorites/favorites.controller';
 import { FavoritesModule } from './favorites/favorites.module';
-
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        url: configService.get('DB_HOST2'),
-        ssl: {
-          rejectUnauthorized: false,
-        },
-        // host: configService.get('DB_HOST'),
-        // port: configService.get('DB_PORT'),
-        // username: configService.get('DB_USERNAME'),
-        // password: configService.get('DB_PASSWORD'),
-        // database: configService.get('DB_NAME'),
+        // url: configService.get('DB_HOST2'),
+        // ssl: {
+        //   rejectUnauthorized: false,
+        // },
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_NAME'),
         synchronize: true,
         entities: [__dirname + '/**/*.entity{.js, .ts}'],
       }),
@@ -43,6 +43,7 @@ import { FavoritesModule } from './favorites/favorites.module';
     UserModule,
     ConfigModule.forRoot({ isGlobal: true }),
     FavoritesModule,
+    CloudinaryModule,
   ],
   controllers: [],
   providers: [],
