@@ -7,7 +7,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  Transaction,
 } from 'typeorm';
 
 @Entity()
@@ -20,6 +19,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ default: 'user' })
+  role: string;
 
   @OneToMany(() => Dog, (dog) => dog.user, { onDelete: 'CASCADE' })
   dogs: Dog[];

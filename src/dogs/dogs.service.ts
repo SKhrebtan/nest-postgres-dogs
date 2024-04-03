@@ -48,6 +48,14 @@ export class DogsService {
     });
   }
 
+  async findAllDogs() {
+    return this.dogRepository.find({
+      relations: {
+        favorites: true,
+      },
+    });
+  }
+
   async findOne(id: number) {
     const dog = await this.dogRepository.findOne({
       where: { id },

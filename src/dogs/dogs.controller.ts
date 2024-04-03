@@ -28,11 +28,12 @@ import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
 import { Dog } from './interfaces/dog.interface';
 import { DogsService } from './dogs.service';
-import { Roles } from 'src/role/roles.decorator';
+import { HasRoles } from 'src/role/roles.decorator';
 import { Role } from 'src/role/roles.enum';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { AuthorGuard } from 'src/guard/author.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { RolesGuard } from 'src/role/roles.guard';
 
 @Controller('dogs')
 export class DogsController {
@@ -56,6 +57,31 @@ export class DogsController {
   //   return this.cloudinaryService.uploadFile(file);
   // }
 
+  @HasRoles(Role.Admin)
+  @Post('alldogs')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  @UsePipes(new ValidationPipe())
+  async createNewDog(
+    @Body() createDogDto: CreateDogDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
+          new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Req() req,
+  ) {
+    let imageUrl;
+    if (file) {
+      imageUrl = await this.cloudinaryService.uploadFile(file);
+    }
+    return this.dogsService.create(createDogDto, imageUrl.url, req.user.id);
+  }
+
   @Post()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
@@ -78,6 +104,11 @@ export class DogsController {
       imageUrl = await this.cloudinaryService.uploadFile(file);
     }
     return this.dogsService.create(createDogDto, imageUrl.url, req.user.id);
+  }
+
+  @Get('alldogs')
+  findAllDogs() {
+    return this.dogsService.findAllDogs();
   }
 
   @Get()
