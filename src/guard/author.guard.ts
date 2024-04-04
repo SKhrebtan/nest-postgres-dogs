@@ -30,7 +30,10 @@ export class AuthorGuard implements CanActivate {
     }
 
     const user = request.user;
-    if (entity && user && user.id === entity.user.id) {
+    if (
+      (entity && user && user.id === entity.user.id) ||
+      user.role === 'admin'
+    ) {
       return true;
     }
     return false;
