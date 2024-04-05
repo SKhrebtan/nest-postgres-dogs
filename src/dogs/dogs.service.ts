@@ -1,12 +1,10 @@
 import { UpdateDogDto } from './dto/update-dog.dto';
 import { CreateDogDto } from './dto/create-dog.dto';
 import {
-  BadGatewayException,
   Injectable,
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { SearchDTO } from './dto/search-dto.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Dog } from './entities/dog.entity';
@@ -18,7 +16,7 @@ export class DogsService {
     private readonly dogRepository: Repository<Dog>,
   ) {}
 
-  async create(createDogDto: CreateDogDto, imageUrl: string, id: number) {
+  async create(createDogDto: CreateDogDto, id: number) {
     const isExist = await this.dogRepository.findBy({
       user: { id },
       name: createDogDto.name,
@@ -28,7 +26,7 @@ export class DogsService {
     const newDog = {
       name: createDogDto.name,
       breed: createDogDto.breed,
-      image: imageUrl,
+      image: createDogDto.image,
       user: {
         id,
       },
@@ -36,6 +34,25 @@ export class DogsService {
 
     return this.dogRepository.save(newDog);
   }
+
+  // async create(createDogDto: CreateDogDto, imageUrl: string, id: number) {
+  //   const isExist = await this.dogRepository.findBy({
+  //     user: { id },
+  //     name: createDogDto.name,
+  //   });
+
+  //   if (isExist.length) throw new BadRequestException('This dog already exist');
+  //   const newDog = {
+  //     name: createDogDto.name,
+  //     breed: createDogDto.breed,
+  //     image: imageUrl,
+  //     user: {
+  //       id,
+  //     },
+  //   };
+
+  //   return this.dogRepository.save(newDog);
+  // }
 
   async findAll(id: number) {
     return this.dogRepository.find({

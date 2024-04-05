@@ -18,6 +18,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FavoritesController } from './favorites/favorites.controller';
 import { FavoritesModule } from './favorites/favorites.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { AllDogsModule } from './alldogs/alldogs.module';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -38,6 +39,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
       }),
       inject: [ConfigService],
     }),
+    AllDogsModule,
     DogsModule,
     AuthModule,
     UserModule,

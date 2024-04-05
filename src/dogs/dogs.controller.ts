@@ -57,54 +57,59 @@ export class DogsController {
   //   return this.cloudinaryService.uploadFile(file);
   // }
 
-  @HasRoles(Role.Admin)
-  @Post('alldogs')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @UseInterceptors(FileInterceptor('file'))
-  @UsePipes(new ValidationPipe())
-  async createNewDog(
-    @Body() createDogDto: CreateDogDto,
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-          new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
-        ],
-      }),
-    )
-    file: Express.Multer.File,
-    @Req() req,
-  ) {
-    let imageUrl;
-    if (file) {
-      imageUrl = await this.cloudinaryService.uploadFile(file);
-    }
-    return this.dogsService.create(createDogDto, imageUrl.url, req.user.id);
-  }
-
+  // @HasRoles(Role.Admin)
+  // @Post('alldogs')
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @UseInterceptors(FileInterceptor('file'))
+  // @UsePipes(new ValidationPipe())
+  // async createNewDog(
+  //   @Body() createDogDto: CreateDogDto,
+  //   @UploadedFile(
+  //     new ParseFilePipe({
+  //       validators: [
+  //         new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
+  //         new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+  //       ],
+  //     }),
+  //   )
+  //   file: Express.Multer.File,
+  //   @Req() req,
+  // ) {
+  //   let imageUrl;
+  //   if (file) {
+  //     imageUrl = await this.cloudinaryService.uploadFile(file);
+  //   }
+  //   return this.dogsService.create(createDogDto, imageUrl.url, req.user.id);
+  // }
   @Post()
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(FileInterceptor('file'))
   @UsePipes(new ValidationPipe())
-  async create(
-    @Body() createDogDto: CreateDogDto,
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-          new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
-        ],
-      }),
-    )
-    file: Express.Multer.File,
-    @Req() req,
-  ) {
-    let imageUrl;
-    if (file) {
-      imageUrl = await this.cloudinaryService.uploadFile(file);
-    }
-    return this.dogsService.create(createDogDto, imageUrl.url, req.user.id);
+  async create(@Body() createDogDto: CreateDogDto, @Req() req) {
+    return this.dogsService.create(createDogDto, req.user.id);
   }
+  // @Post()
+  // @UseGuards(JwtAuthGuard)
+  // @UseInterceptors(FileInterceptor('file'))
+  // @UsePipes(new ValidationPipe())
+  // async create(
+  //   @Body() createDogDto: CreateDogDto,
+  //   @UploadedFile(
+  //     new ParseFilePipe({
+  //       validators: [
+  //         new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
+  //         new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+  //       ],
+  //     }),
+  //   )
+  //   file: Express.Multer.File,
+  //   @Req() req,
+  // ) {
+  //   let imageUrl;
+  //   if (file) {
+  //     imageUrl = await this.cloudinaryService.uploadFile(file);
+  //   }
+  //   return this.dogsService.create(createDogDto, imageUrl.url, req.user.id);
+  // }
 
   @Get('alldogs')
   findAllDogs() {
