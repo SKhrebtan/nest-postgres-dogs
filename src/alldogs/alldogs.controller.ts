@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   FileTypeValidator,
+  Get,
   MaxFileSizeValidator,
   ParseFilePipe,
   Post,
@@ -50,5 +51,10 @@ export class AllDogsController {
       imageUrl = await this.cloudinaryService.uploadFile(file);
     }
     return this.allDogsService.create(createNewDogDto, imageUrl.url);
+  }
+
+  @Get('alldogs')
+  findAllDogs() {
+    return this.allDogsService.findAllDogs();
   }
 }

@@ -25,4 +25,8 @@ export class AllDogsService {
 
     return this.newDogRepository.save(newDog);
   }
+
+  async findAllDogs() {
+    return this.newDogRepository.find();
+  }
 }
