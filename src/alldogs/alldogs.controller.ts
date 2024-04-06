@@ -61,7 +61,6 @@ export class AllDogsController {
   }
 
   @Get('/:id')
-  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: number) {
     return this.allDogsService.findOne(id);
   }
