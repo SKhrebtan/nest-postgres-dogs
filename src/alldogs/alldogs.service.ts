@@ -30,6 +30,13 @@ export class AllDogsService {
     return this.newDogRepository.save(newDog);
   }
 
+  async findOne(id: number) {
+    const dog = await this.newDogRepository.findOne({
+      where: { id },
+    });
+    if (!dog) throw new NotFoundException('Dog is not found');
+    return dog;
+  }
   async findAllDogs() {
     return this.newDogRepository.find();
   }
