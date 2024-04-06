@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NewDog } from './entities/newdog.entity';
@@ -28,5 +32,16 @@ export class AllDogsService {
 
   async findAllDogs() {
     return this.newDogRepository.find();
+  }
+
+  async delete(id: number) {
+    const dog = await this.newDogRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!dog) throw new NotFoundException('Dog not found');
+    await this.newDogRepository.delete(id);
+    return dog;
   }
 }

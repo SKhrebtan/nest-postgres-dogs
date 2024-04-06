@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
+  Param,
   ParseFilePipe,
   Post,
   Req,
@@ -56,5 +58,11 @@ export class AllDogsController {
   @Get('alldogs')
   findAllDogs() {
     return this.allDogsService.findAllDogs();
+  }
+  @HasRoles(Role.Admin)
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  delete(@Param('id') id: number) {
+    return this.allDogsService.delete(id);
   }
 }
