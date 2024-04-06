@@ -60,9 +60,8 @@ export class AllDogsController {
     return this.allDogsService.findAllDogs();
   }
 
-  @HasRoles(Role.Admin)
   @Get('/:id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: number) {
     return this.allDogsService.findOne(id);
   }
