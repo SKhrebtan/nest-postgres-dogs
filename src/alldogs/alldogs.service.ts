@@ -53,14 +53,21 @@ export class AllDogsService {
   }
 
   async findAllWithPagination(page: number, limit: number) {
-    const dogs = await this.newDogRepository.find({
+    const [dogs, total] = await this.newDogRepository.findAndCount({
       order: {
         createdAt: 'ASC',
       },
       take: limit,
       skip: (page - 1) * limit,
     });
-    if (!dogs) throw new BadRequestException('Something went wrong...');
-    return dogs;
+
+    if (!dogs) {
+      throw new BadRequestException('Something went wrong...');
+    }
+    const totalPages = Math.ceil(total / limit);
+    return {
+      dogs,
+      totalPages,
+    };
   }
 }
