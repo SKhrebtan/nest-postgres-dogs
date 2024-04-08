@@ -51,4 +51,16 @@ export class AllDogsService {
     await this.newDogRepository.delete(id);
     return dog;
   }
+
+  async findAllWithPagination(page: number, limit: number) {
+    const dogs = await this.newDogRepository.find({
+      order: {
+        createdAt: 'ASC',
+      },
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+    if (!dogs) throw new BadRequestException('Something went wrong...');
+    return dogs;
+  }
 }

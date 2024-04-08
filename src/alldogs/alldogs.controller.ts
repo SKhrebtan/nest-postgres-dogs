@@ -8,6 +8,7 @@ import {
   Param,
   ParseFilePipe,
   Post,
+  Query,
   Req,
   UploadedFile,
   UseGuards,
@@ -53,6 +54,14 @@ export class AllDogsController {
       imageUrl = await this.cloudinaryService.uploadFile(file);
     }
     return this.allDogsService.create(createNewDogDto, imageUrl.url);
+  }
+
+  @Get('pagination')
+  findAllWithPagination(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.allDogsService.findAllWithPagination(page, limit);
   }
 
   @Get('alldogs')
