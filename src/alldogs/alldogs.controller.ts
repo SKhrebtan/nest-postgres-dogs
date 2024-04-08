@@ -32,6 +32,14 @@ export class AllDogsController {
     private allDogsService: AllDogsService,
   ) {}
 
+  @Get('pagination')
+  findAllWithPagination(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.allDogsService.findAllWithPagination(page, limit);
+  }
+
   @HasRoles(Role.Admin)
   @Post('new-dog')
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -54,14 +62,6 @@ export class AllDogsController {
       imageUrl = await this.cloudinaryService.uploadFile(file);
     }
     return this.allDogsService.create(createNewDogDto, imageUrl.url);
-  }
-
-  @Get('pagination')
-  findAllWithPagination(
-    @Query('page') page: number,
-    @Query('limit') limit: number,
-  ) {
-    return this.allDogsService.findAllWithPagination(page, limit);
   }
 
   @Get('alldogs')
