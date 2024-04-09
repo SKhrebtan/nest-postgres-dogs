@@ -41,6 +41,12 @@ export class DogsController {
     private cloudinaryService: CloudinaryService,
     private dogsService: DogsService,
   ) {}
+
+  @Patch(':type/:id')
+  @UseGuards(JwtAuthGuard, AuthorGuard)
+  update(@Param('id') id: number, @Body() updateDogDto: UpdateDogDto) {
+    return this.dogsService.update(id, updateDogDto);
+  }
   // @Post('upload')
   // @UseInterceptors(FileInterceptor('file'))
   // uploadImage(
@@ -126,12 +132,6 @@ export class DogsController {
   @UseGuards(JwtAuthGuard, AuthorGuard)
   findOne(@Param('id') id: number) {
     return this.dogsService.findOne(id);
-  }
-
-  @Patch(':type/:id')
-  @UseGuards(JwtAuthGuard, AuthorGuard)
-  update(@Param('id') id: number, @Body() updateDogDto: UpdateDogDto) {
-    return this.dogsService.update(id, updateDogDto);
   }
 
   @Delete(':type/:id')
