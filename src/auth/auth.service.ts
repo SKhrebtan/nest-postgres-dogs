@@ -67,7 +67,7 @@ export class AuthService {
 
     if (!isExist) throw new BadRequestException('User is not eexist');
     const avatar = imageUrl;
-
-    return this.userService.update(id, avatar);
+    this.userService.update(id, avatar);
+    return avatar;
   }
 }
