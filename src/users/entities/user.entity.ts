@@ -20,6 +20,12 @@ export class User {
   @Column()
   password: string;
 
+  @Column({
+    default:
+      'http://res.cloudinary.com/dwzeqka9z/image/upload/v1712689299/avatars/mgacvubtkjwjjrg3kvvs.jpg',
+  })
+  avatar: string;
+
   @Column({ default: 'user' })
   role: string;
 

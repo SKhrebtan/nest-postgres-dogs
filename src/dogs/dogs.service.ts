@@ -91,8 +91,6 @@ export class DogsService {
         id,
       },
     });
-    console.log(dog);
-    console.log(updateDogDto);
     if (!dog) throw new NotFoundException('Dog not found');
     await this.dogRepository.update(id, updateDogDto);
     return dog;

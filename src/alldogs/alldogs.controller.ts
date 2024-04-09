@@ -59,7 +59,7 @@ export class AllDogsController {
   ) {
     let imageUrl;
     if (file) {
-      imageUrl = await this.cloudinaryService.uploadFile(file);
+      imageUrl = await this.cloudinaryService.uploadFile(file, 'dogs');
     }
     return this.allDogsService.create(createNewDogDto, imageUrl.url);
   }

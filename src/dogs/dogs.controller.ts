@@ -45,7 +45,6 @@ export class DogsController {
   @Patch(':type/:id')
   @UseGuards(JwtAuthGuard, AuthorGuard)
   update(@Param('id') id: number, @Body() updateDogDto: UpdateDogDto) {
-    console.log(updateDogDto);
     return this.dogsService.update(id, updateDogDto);
   }
   // @Post('upload')

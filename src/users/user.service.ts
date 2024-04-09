@@ -41,4 +41,8 @@ export class UserService {
       },
     });
   }
+
+  async update(id, avatar) {
+    return await this.userRepository.update(id, { avatar });
+  }
 }

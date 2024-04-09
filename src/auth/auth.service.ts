@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../users/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -53,4 +57,16 @@ export class AuthService {
   //     access_token: await this.jwtService.signAsync(payload),
   //   };
   // }
+
+  async updateAvatar(user, imageUrl: string) {
+    const { id, email } = user;
+    const isExist = await this.userService.findOne(email);
+    console.log(isExist);
+    console.log(user);
+
+    if (!isExist) throw new BadRequestException('User is not eexist');
+    const avatar = imageUrl;
+
+    return this.userService.update(id, avatar);
+  }
 }
