@@ -25,11 +25,12 @@ export class AuthService {
     throw new UnauthorizedException('User or password is incorrect');
   }
   async login(user: IUser) {
-    const { id, email, role } = user;
+    const { id, email, role, avatar } = user;
     return {
       id,
       email,
       role,
+      avatar,
       token: this.jwtService.sign({
         id: user.id,
         email: user.email,
