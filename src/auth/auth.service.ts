@@ -30,11 +30,12 @@ export class AuthService {
       id,
       email,
       role,
-      avatar,
+
       token: this.jwtService.sign({
         id: user.id,
         email: user.email,
         role,
+        avatar,
       }),
     };
   }
