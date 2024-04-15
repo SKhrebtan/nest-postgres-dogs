@@ -1,9 +1,6 @@
 import {
-  Body,
   Controller,
   Post,
-  HttpCode,
-  HttpStatus,
   Request,
   UseGuards,
   Get,
@@ -34,6 +31,12 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalAuthGuard)
   async login(@Request() req) {
+    return this.authService.login(req.user);
+  }
+
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  async logout(@Request() req) {
     return this.authService.login(req.user);
   }
 
