@@ -39,6 +39,21 @@ export class AuthService {
     };
   }
 
+  async profile(user: IUser) {
+    const { id, email, role, avatar } = user;
+    return {
+      id,
+      email,
+      role,
+      avatar,
+      token: this.jwtService.sign({
+        id: user.id,
+        email: user.email,
+        role,
+      }),
+    };
+  }
+
   async validateOwner(id: number) {
     return;
   }

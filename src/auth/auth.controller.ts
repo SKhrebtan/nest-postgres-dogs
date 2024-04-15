@@ -37,7 +37,7 @@ export class AuthController {
   @Get('profile')
   @UseGuards(JwtAuthGuard)
   getProfile(@Request() req) {
-    return req.user;
+    return this.authService.profile(req.user);
   }
 
   @Patch('avatar')
