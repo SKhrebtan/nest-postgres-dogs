@@ -39,14 +39,6 @@ export class AuthService {
     };
   }
 
-  async logout(user: IUser) {
-    const { id } = user;
-    await this.userService.update(id, { token: '' });
-    return {
-      message: 'Logout success',
-    };
-  }
-
   async validateOwner(id: number) {
     return;
   }
