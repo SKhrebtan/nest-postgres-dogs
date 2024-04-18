@@ -79,8 +79,6 @@ export class AuthService {
   async updateAvatar(user, imageUrl: string) {
     const { id, email } = user;
     const isExist = await this.userService.findOne(email);
-    console.log(isExist);
-    console.log(user);
 
     if (!isExist) throw new BadRequestException('User is not eexist');
     const avatar = imageUrl;

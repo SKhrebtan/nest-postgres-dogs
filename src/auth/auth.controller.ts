@@ -59,7 +59,6 @@ export class AuthController {
     let imageUrl;
     if (file) {
       imageUrl = await this.cloudinaryService.uploadFile(file, 'avatars');
-      console.log(imageUrl);
     }
     return this.authService.updateAvatar(req.user, imageUrl.url);
   }
