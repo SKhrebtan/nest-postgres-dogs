@@ -25,8 +25,10 @@ export class AuthService {
     throw new UnauthorizedException('User or password is incorrect');
   }
   async login(user: IUser) {
-    const { id, email, role, avatar } = user;
+    console.log(user)
+    const { id, email, role, avatar, name } = user;
     return {
+      name,
       id,
       email,
       role,

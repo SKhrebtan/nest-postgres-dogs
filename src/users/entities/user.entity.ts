@@ -13,7 +13,11 @@ import {
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
-
+  @Column({
+    default:
+      'Username',
+  })
+  name: string;
   @Column()
   email: string;
 
